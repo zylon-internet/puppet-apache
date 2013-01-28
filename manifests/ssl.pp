@@ -22,18 +22,19 @@ class apache::ssl {
         require => Package['apache'],
         notify  => Service['apache'],
       }
-      file { "${apache::configdir}/ssl.conf":
+      file { "${apache::config_dir}/ssl.conf":
         mode   => '0644',
         owner  => 'root',
         group  => 'root',
         notify => Service['apache'],
       }
       file {['/var/cache/mod_ssl', '/var/cache/mod_ssl/scache']:
-        ensure => directory,
-        owner  => 'apache',
-        group  => 'root',
-        mode   => '0700',
-        notify => Service['apache'],
+        ensure  => directory,
+        owner   => 'apache',
+        group   => 'root',
+        mode    => '0700',
+        require => Package['mod_ssl'],
+        notify  => Service['apache'],
       }
     }
   }
